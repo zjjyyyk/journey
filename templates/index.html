@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load relative_url %}
+{% block title %}Index - Photo Gallery{% endblock %}
+{% block content %}
+<h1 class="title">Periods</h1>
+<div class="grid grid-3">
+  {% for p in periods %}
+  <article class="card">
+    {% if p.rep %}
+    <a href="{% relative 'period' p.slug %}"><img src="{{ p.rep|urlencode }}" alt="{{ p.name }}" class="card-img"></a>
+    {% else %}
+    <div class="card-img placeholder">No image</div>
+    {% endif %}
+    <div class="card-body">
+      <h3 class="card-title">{{ p.name }}</h3>
+      <a class="card-link" href="{% relative 'period' p.slug %}">Open</a>
+    </div>
+  </article>
+  {% endfor %}
+</div>
+{% endblock %}

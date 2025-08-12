@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block title %}{{ period }} - Photo Gallery{% endblock %}
+{% block content %}
+<h1 class="title">{{ period }}</h1>
+<p class="meta">Showing page {{ page_obj.number }} of {{ paginator.num_pages }} ({{ paginator.count }} photos)</p>
+
+<div class="grid grid-4 small-gap">
+  {% for img in page_obj.object_list %}
+  <div class="thumb-card">
+    <a href="{{ img.url }}" target="_blank">
+      <img src="{{ img.thumb }}" alt="{{ img.name }}" class="thumb-img">
+    </a>
+    <div class="thumb-caption">{{ img.group }}</div>
+  </div>
+  {% endfor %}
+</div>
+
+<nav class="pagination-wrap" aria-label="Page navigation">
+  <ul class="pagination">
+    {% if page_obj.has_previous %}
+      <li><a href="?page={{ page_obj.previous_page_number }}&per_page={{ page_obj.paginator.per_page }}">Previous</a></li>
+    {% else %}
+      <li class="disabled"><span>Previous</span></li>
+    {% endif %}
+
+    {% for num in page_obj.paginator.page_range %}
+      <li class="{% if num == page_obj.number %}active{% endif %}"><a href="?page={{ num }}&per_page={{ page_obj.paginator.per_page }}">{{ num }}</a></li>
+    {% endfor %}
+
+    {% if page_obj.has_next %}
+      <li><a href="?page={{ page_obj.next_page_number }}&per_page={{ page_obj.paginator.per_page }}">Next</a></li>
+    {% else %}
+      <li class="disabled"><span>Next</span></li>
+    {% endif %}
+  </ul>
+</nav>
+{% endblock %}

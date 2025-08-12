@@ -1,0 +1,1 @@
+python manage.py distill-local output --force
